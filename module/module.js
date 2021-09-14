@@ -21,7 +21,8 @@ function createUserModule(data){
     return new Promise((resolve,reject)=>{
         dbconnection.insertOne(collection1,data)
         .then((response)=>{
-            console.log('collection res',response)
+            console.log('collection res',response);
+            return resolve(response)
         }).catch((error)=>{
             
             if(error.ErrorDetail === 'Collection not found') {
@@ -55,4 +56,56 @@ function getUserList(){
         })
     })
 }
-module.exports = {createUserModule,getUserList}
+
+// get customer byid
+function getCinfoById(customerid){
+    return new Promise((resolve,reject)=>{
+        dbconnection.getOne(collection1,customerid)
+        .then((response)=>{
+            return resolve(response)
+        }).catch((error)=>{
+            return reject(error)
+        })
+    })
+}
+
+// get customer byquery
+function getCinfoByQuery(customerquery){
+    return new Promise((resolve,reject)=>{
+        
+        var query = `{"firstname":"${customerquery}"}`
+        
+        dbconnection.getMany(collection1,query)
+        .then((response)=>{
+            console.log('REsponse:',response);
+            return resolve(response)
+        }).catch((error)=>{
+            console.log('Catch:',error);
+            return reject(error)
+        })
+    })
+}
+// updateCustomerById
+function updateCustomerByIdModule(customeupdateid,bodydata){
+    return new Promise((resolve,reject)=>{
+        console.log('customeupdateid',customeupdateid,bodydata);
+        dbconnection.updateOne(collection1,customeupdateid,bodydata)
+        .then((response)=>{
+            return resolve(response);
+        }).catch((error)=>{
+            return reject(error);
+        })
+    })
+}
+// deleteCustomerByIdModule
+function deleteCustomerByIdModule(deletecustomer){
+    return new Promise((resolve,reject)=>{
+        dbconnection.deleteOne(collection1,deletecustomer)
+        .then((response)=>{
+            return resolve(response)
+        }).catch((error)=>{
+            return reject(error)
+        })
+    })
+}
+module.exports = {createUserModule,getUserList,getCinfoById,getCinfoByQuery,updateCustomerByIdModule,deleteCustomerByIdModule}
