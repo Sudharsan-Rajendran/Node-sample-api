@@ -109,3 +109,4 @@ function deleteCustomerByIdModule(deletecustomer){
     })
 }
 module.exports = {createUserModule,getUserList,getCinfoById,getCinfoByQuery,updateCustomerByIdModule,deleteCustomerByIdModule}
+// hello
